@@ -57,9 +57,13 @@
     <Compile Include="Serie2\Ex4_Matrice.cs" />
     <Compile Include="Serie2\Ex5_Crible.cs" />
     <Compile Include="Serie2\Ex6_QCM.cs" />
+    <Compile Include="Serie3\Ex1_AdministrativeTasks.cs" />
+    <Compile Include="Serie3\Ex2_CesarCode.cs" />
+    <Compile Include="Serie3\Ex3_MorseCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

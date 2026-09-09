@@ -1,6 +1,7 @@
 ﻿using Exercices.Serie2;
 using Serie_I;
 using Serie2;
+using Serie3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,36 +19,56 @@ namespace Exercices
         static void Main(string[] args)
         {
 
-            /*  ElementaryOperations.BasicOperation(3, 4, '+');
-              ElementaryOperations.BasicOperation(6, 2, '/');
-              ElementaryOperations.BasicOperation(3, 0, '/');
-              ElementaryOperations.BasicOperation(6, 4, 'L');
+            exeSerie3();
+            
 
-              ElementaryOperations.IntegerDivision(12, -4);
-              ElementaryOperations.IntegerDivision(13, -4);
-              ElementaryOperations.IntegerDivision(12, 0);
+            
 
-              ElementaryOperations.Pow(5, 3);
-              ElementaryOperations.Pow(5, -1);
+            Console.ReadKey();
+            
+        }
 
-              string res = SpeakingClock.GoodDay(24);
-              Console.WriteLine(res);
-              res = SpeakingClock.GoodDay(5);
-              Console.WriteLine(res);
-              res = SpeakingClock.GoodDay(15);
-              Console.WriteLine(res);
+        public static void exeSerie1_2026()
+        {
+            ElementaryOperations.BasicOperation(3, 4, '+');
+            ElementaryOperations.BasicOperation(6, 2, '/');
+            ElementaryOperations.BasicOperation(3, 0, '/');
+            ElementaryOperations.BasicOperation(6, 4, 'L');
 
-              Pyramid.PyramidConstruction(10, false);
+            ElementaryOperations.IntegerDivision(12, -4);
+            ElementaryOperations.IntegerDivision(13, -4);
+            ElementaryOperations.IntegerDivision(12, 0);
 
-              int resfact = Factorial.Factorial_(0);
-              Console.WriteLine($"Resultat factorielle 0 : {resfact}");
+            ElementaryOperations.Pow(5, 3);
+            ElementaryOperations.Pow(5, -1);
 
-              resfact = Factorial.FactorialRecursive(5);
-              Console.WriteLine($"Resultat factorielle recursive de 5 : {resfact}");
+            string res = SpeakingClock.GoodDay(24);
+            Console.WriteLine(res);
+            res = SpeakingClock.GoodDay(5);
+            Console.WriteLine(res);
+            res = SpeakingClock.GoodDay(15);
+            Console.WriteLine(res);
 
-              */
+            Pyramid.PyramidConstruction(10, false);
 
-            /*int[] tab = new int[] { -1, 4, 7, 12, -6, 5 };
+            int resfact = Factorial.Factorial_(0);
+            Console.WriteLine($"Resultat factorielle 0 : {resfact}");
+
+            resfact = Factorial.FactorialRecursive(5);
+            Console.WriteLine($"Resultat factorielle recursive de 5 : {resfact}");
+        }
+
+        public static void exeSerie1_2022()
+        {
+            Prime.DisplayPrimes();
+
+            int res = Euclide.Ged(60, 18);
+            Console.WriteLine($"Le plus grand diviseur commun entre 60 et 18 est : {res}");
+        }
+
+        public static void exeSerie2_2026()
+        {
+            int[] tab = new int[] { -1, 4, 7, 12, -6, 5 };
             int[] tab2 = new int[] { -2, 8 };
             int[] tabVide = new int[0];
 
@@ -84,14 +105,10 @@ namespace Exercices
             afficheTab(tabTrie);
             indiceSearch = Search.BinarySearch(tabTrie, 23);
             Console.WriteLine($"Valeur 23 à l'indice {indiceSearch}");
-            */
+        }
 
-            /*Prime.DisplayPrimes();
-
-            int res = Euclide.Ged(60, 18);
-            Console.WriteLine($"Le plus grand diviseur commun entre 60 et 18 est : {res}");
-            */
-
+        public static void exeSerie2_2022()
+        {
             int[] tab1 = new int[] { 1, 2, 3 };
             int[] tab2 = new int[] { -1, -4, 0 };
 
@@ -155,8 +172,70 @@ namespace Exercices
 
             QCM[] tabQcm = new QCM[] { qcm, qcm2, qcm3 };
             QCM.AskQuestions(tabQcm);
+        }
 
-            Console.ReadKey();
+        public static void exeSerie3()
+        {
+            string[] strTab = new string[] { "dollars", "Reagan", "Afghanistan", "ouest", "crime", "défaite" };
+            
+            string texte = "Nikolai, où as-tu caché mes dollars ? Je dois aller à l'ouest ! L'armée m'appelle pour aller en Afghanistan";
+            string resText = AdministrativeTasks.EliminateSeditiousThoughts(texte, strTab);
+            Console.WriteLine("Texte de sortie :");
+            Console.WriteLine(resText);
+
+            Console.WriteLine();
+
+            string[] ressencement = new string[] {"M.   Plenko       Andrej       04",
+                                                  "Mlle Pietrova    Augusta       46",
+                                                  "Mr   Dimitrov     Nikolai      24",
+                                                  "M.   Dimitrov     Alexei        4",
+                                                  "M.   D1m1tr0v     Al3x31       16"
+                                                };
+            Console.WriteLine("Recensement des résidents : ");
+            
+            for(int i = 0; i < ressencement.Length; i++)
+            {
+                Console.WriteLine($"Ligne {i+1} : [{ressencement[i]}]");
+                bool resFormat = AdministrativeTasks.ControlFormat(ressencement[i]);
+                if (resFormat)
+                {
+                    Console.WriteLine("Format Ok");
+                }
+                else
+                {
+                    Console.WriteLine("Format KO");
+                }
+            }
+
+            Console.WriteLine();
+
+            string dateRapport = "1982-10-09 : Appel suspect de M. Plenko Andrej à M. Dimitrov Nikolai, arrestation des deux suspect le 1982-10-19.";
+            Console.WriteLine("Correction des dates :");
+            Console.WriteLine("Rapport en entrée : ");
+            Console.WriteLine(dateRapport);
+            string dateRes = AdministrativeTasks.ChangeDate(dateRapport);
+
+            Console.WriteLine("Rapport en sortie :");
+            Console.WriteLine(dateRes);
+
+            Console.WriteLine("Phrase à coder : " + texte);
+            Cesar cesarCode = new Cesar();
+            string texteCode = cesarCode.CesarCode(texte);
+            Console.WriteLine("Phrase coder : " + texteCode);
+            Console.WriteLine("Phrase decoder : " + cesarCode.DecryptCesarCode(texteCode));
+
+            Console.WriteLine("Codage avec une clé de 5 : ");
+            texteCode = cesarCode.GeneralCesarCode(texte, 5);
+            Console.WriteLine("Phrase encoder : " + texteCode);
+            Console.WriteLine("Phrase decoder : " + cesarCode.GeneralDecryptCesarCode(texteCode, 5));
+
+            Console.WriteLine("Traduction Morse : ");
+            string texteMorse = "===.=.===.=...===.===.===...===.=.=...=.....===.===...===.===.===...=.===.=...=.=.=...=";
+            Morse codeMorse = new Morse();
+            string trad = codeMorse.EfficientMorseTranslation(texteMorse);
+            Console.WriteLine(trad);
+
+
         }
 
         public static void afficheTab(int[] tab, bool res = false)
