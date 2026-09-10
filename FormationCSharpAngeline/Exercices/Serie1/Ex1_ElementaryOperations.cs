@@ -10,7 +10,6 @@ namespace Serie_I
     {
         public static void BasicOperation(int a, int b, char operation)
         {
-            int res = 0;
             switch (operation)
             {
                 case '+':

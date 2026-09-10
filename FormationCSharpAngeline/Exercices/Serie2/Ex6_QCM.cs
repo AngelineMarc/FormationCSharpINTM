@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exercices.Serie2
+namespace Serie2
 {
     internal class QCM
     {

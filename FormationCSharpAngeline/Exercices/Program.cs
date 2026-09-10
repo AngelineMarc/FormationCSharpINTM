@@ -1,7 +1,7 @@
-﻿using Exercices.Serie2;
-using Serie_I;
+﻿using Serie_I;
 using Serie2;
 using Serie3;
+using Serie4;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Exercices
         static void Main(string[] args)
         {
 
-            exeSerie3();
+            exeSerie4();
             
 
             
@@ -89,8 +89,8 @@ namespace Exercices
             afficheTab(resTabConcat, true);
 
             char[,] grilleMorpion = new char[3, 3] { { 'X', 'O', 'X' }, { '_', 'X', 'X' }, { 'O', 'O', 'O' } };
-            Morpion.DisplayMorpion(grilleMorpion);
-            int resMorpion = Morpion.CheckMorpion(grilleMorpion);
+            Serie2.Morpion.DisplayMorpion(grilleMorpion);
+            int resMorpion = Serie2.Morpion.CheckMorpion(grilleMorpion);
             Console.WriteLine($"res : {resMorpion}");
 
             Console.WriteLine("Recherche linéaire :");
@@ -231,13 +231,25 @@ namespace Exercices
 
             Console.WriteLine("Traduction Morse : ");
             string texteMorse = "===.=.===.=...===.===.===...===.=.=...=.....===.===...===.===.===...=.===.=...=.=.=...=";
+            string textMorseReal1 = "...===.=.===.=...===.===.===...===.=.=...=.....";
+            string textMorseReal2 = "===.=.===.=....===..===..===...===.=.=...=.....";
             Morse codeMorse = new Morse();
-            string trad = codeMorse.EfficientMorseTranslation(texteMorse);
-            Console.WriteLine(trad);
-
+            string trad = codeMorse.EfficientMorseTranslation(textMorseReal1);
+            Console.WriteLine(textMorseReal1 + " : " + trad);
+            trad = codeMorse.EfficientMorseTranslation(texteMorse);
+            Console.WriteLine(texteMorse + " : " + trad);
+            string phraseACrypter = "Code morse";
+            trad = codeMorse.MorseEncryption(phraseACrypter);
+            Console.WriteLine(phraseACrypter + " : " + trad);
 
         }
 
+        public static void exeSerie4()
+        {
+            //ClassCouncil.SchoolMeans("../../Serie4/moyenneEleve.csv", "../../Serie4/moyenneMatiere.csv");
+
+            Serie4.Morpion.MorpionGame();
+        }
         public static void afficheTab(int[] tab, bool res = false)
         {
             if (res)

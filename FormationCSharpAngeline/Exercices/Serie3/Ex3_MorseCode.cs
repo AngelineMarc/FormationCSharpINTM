@@ -103,14 +103,78 @@ namespace Serie3
 
         public string EfficientMorseTranslation(string code)
         {
+            string codeTrad = "";
+            //Nettoyage de la chaine pour les séparations entre impulsion
+            for(int i = 0; i < code.Length - 2; i++)
+            {
+                if (code[i] == '.' && code[i+1] == '.' && code[i+2] != '.' && code[i-1] != '.')
+                {
+                    code = code.Remove(i, 2);
+                    code = code.Insert(i, ".");
+                }
+            }
 
-            return string.Empty;
+            //Un mot est séparé par 5 point ou plus
+            foreach (string mot in Regex.Split(code, @"(?:\.{5,})"))
+            {
+                //Parcours des lettres d'un mot, une lettre est séparée par 3 ou 4 points
+                foreach (string lettre in Regex.Split(mot, @"(?:\.{3,4})"))
+                {
+                    //Ajout à la string finale la traduction stockée dans le dictionnaire
+                    if (_alphabet.ContainsKey(lettre))
+                    {
+                        codeTrad += _alphabet[lettre].ToString();
+                    } 
+                    //Si la lettre n'est pas dans l'alphabet et est différente de vide, il s'agit d'une lettre inconnue
+                    else if (lettre != "")
+                    {
+                        codeTrad += "+";
+                    }
+
+                }
+                if (mot != "")
+                {
+                    codeTrad += " ";
+                }
+                
+            }
+
+            return codeTrad;
         }
 
         public string MorseEncryption(string sentence)
         {
-            //TODO
-            return string.Empty;
+            string codeMorse =  "";
+            sentence = sentence.ToUpper();
+
+            //Parcours des lettres de la phrase
+            foreach(char lettre in sentence)
+            {
+                //Parcours du dictionnaire
+                foreach(KeyValuePair<string, char> item in _alphabet)
+                {
+                    
+                    //Si la lettre correspond à celle du dictionnaire, on ajoute le code morse correspondant au résultat
+                    if (item.Value == lettre)
+                    {
+                        codeMorse += item.Key;
+                        break;
+                    }
+                }
+
+                //Si on traite un lettre, on ajoute le séparateur en 3 points
+                if (lettre != ' ')
+                {
+                    codeMorse += "...";
+                }
+                //Sinon on rajoute un séparateur en 2 points qui se rajoute aux 3 points pour séparer 2 mots 
+                else
+                {
+                    codeMorse += "..";
+                }
+
+            }
+            return codeMorse;
         }
     }
 }
