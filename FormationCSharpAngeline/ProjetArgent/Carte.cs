@@ -23,7 +23,7 @@ namespace ProjetArgent
         }
 
         /// <summary>
-        /// Méthode permettant de vérifiée si le plafond à été atteint pour la transaction actuelle
+        /// Méthode permettant de vérifier si le plafond a été atteint pour la transaction actuelle
         /// </summary>
         /// <param name="transaction">transaction en cours de traitement</param>
         /// <returns></returns>
@@ -34,7 +34,7 @@ namespace ProjetArgent
             //Parcours de toutes les transactions de l'historique
             foreach(Transaction tr in Historique)
             {
-                // Si la transaction de l'historaique est datée de moins de 10 jours par rapport à l'actuelle
+                // Si la transaction de l'historique est datée de moins de 10 jours par rapport à l'actuelle
                 if((transaction.Horodatage - tr.Horodatage).TotalDays <= 10)
                 {
                     // S'il s'agissait d'un retrait d'argent ou d'un virement

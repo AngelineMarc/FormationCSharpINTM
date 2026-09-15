@@ -23,10 +23,10 @@ namespace ProjetArgent
             //Test du plafond selon les dates, résultat attendu : OK, OK , KO, OK, OK, KO, OK, OK
             //lireTransaction("../../transactionsPlafond.csv", banque);
 
-            //Test avec différents montant, à la fois négatif ou supérieur au solde, résultat attendu : tout KO
+            //Test avec différents montants, à la fois négatifs ou supérieurs au solde, résultat attendu : tout KO
             //lireTransaction("../../transactionsMontant.csv", banque);
 
-            //Test sur les différents type de compte, résulat attendu : OK, KO, OK
+            //Test sur les différents types de compte, résultat attendu : OK, KO, OK
             //lireTransaction("../../transactionsType.csv", banque);
 
             Console.WriteLine("Traitement terminé");
@@ -35,7 +35,7 @@ namespace ProjetArgent
         }
 
         /// <summary>
-        /// Méthode de lecture du fichier de carte
+        /// Méthode de lecture du fichier de cartes
         /// </summary>
         /// <param name="path"> chemin d'accès au fichier</param>
         /// <param name="banque"> banque associée </param>
@@ -54,7 +54,7 @@ namespace ProjetArgent
                         //Le plafond peut ne pas etre indiqué 
                         if (donneeCarte[1] != "" )
                         {
-                            //Essaie de parsé le plafond en int, sinon on ignore
+                            //Essaie de parser le plafond en int, sinon on ignore
                             if(int.TryParse(donneeCarte[1], out int plafond))
                             {
                                 banque.AjoutCarte(donneeCarte[0], plafond);

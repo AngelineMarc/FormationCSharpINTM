@@ -26,8 +26,8 @@ namespace ProjetArgent
         /// Méthode de création d'un compte et ajout à la liste
         /// </summary>
         /// <param name="id"> identification unique d'un compte</param>
-        /// <param name="numCarte">numéro de la carte associée au compte, la carte doit déjà existée</param>
-        /// <param name="type">type du compte créée, peut etre soit "Livret", soit "Courant"</param>
+        /// <param name="numCarte">numéro de la carte associée au compte, la carte doit déjà exister</param>
+        /// <param name="type">type du compte créé, peut etre soit "Livret", soit "Courant"</param>
         /// <param name="solde"> solde du compte, paramètre optionnel, doit etre positif</param>
         public void AjoutCompte(int id, long numCarte, string type, int solde = 0 )
         {
@@ -39,7 +39,7 @@ namespace ProjetArgent
                 Compte compteExistant = (from item in compteList where item.Identifiant == id select item).FirstOrDefault();
                 if (compteExistant == null)
                 {
-                    //Vérification de l'existance de la carte et création du compte associé, sinon création impossible
+                    //Vérification de l'existence de la carte et création du compte associé, sinon création impossible
                     Carte carte = (from item in carteList where item.Numero == compte.NumCarte select item).FirstOrDefault();
                     if(carte != null)
                     {
@@ -106,11 +106,11 @@ namespace ProjetArgent
                 DateTime horodatageDT = DateTime.ParseExact(horodatage, "dd/MM/yyyy HH:mm:ss", null);
                 Transaction transaction = new Transaction(id, horodatageDT, montant, expediteur, destinataire);
 
-                //Récupération des entitées compte destinataire et expéditeur
+                //Récupération des entités compte destinataire et expéditeur
                 Compte cptdes = (from item in compteList where item.Identifiant == transaction.Destinataire select item).FirstOrDefault();
                 Compte cptexp = (from item in compteList where item.Identifiant == transaction.Expediteur select item).FirstOrDefault();
 
-                //Si l'expéditeur est 0 et que le compte destination existe, il s'agit d'un depot d'argent sur le compte destinataire
+                //Si l'expéditeur est 0 et que le compte destination existe, il s'agit d'un dépôt d'argent sur le compte destinataire
                 if (transaction.Expediteur == 0 && cptdes != null)
                 {
                     operationOk = cptdes.depot(transaction.Montant);
@@ -142,7 +142,7 @@ namespace ProjetArgent
                 //Sinon il s'agit d'une demande de prelevement/virement
                 else
                 {
-                    //Les deux comptes doivent être existant, si les numéros de cartes correspondent ou que les 2 comptes sont des comptes courants
+                    //Les deux comptes doivent être existants, si les numéros de carte correspondent ou que les 2 comptes sont des comptes courants
                     if(cptdes != null && cptexp != null && 
                         (cptdes.NumCarte == cptexp.NumCarte || (cptdes.Type == "Courant" && cptexp.Type == "Courant")))
                     {

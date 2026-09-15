@@ -22,10 +22,10 @@ namespace ProjetArgent
         }
 
         /// <summary>
-        /// Méthode permettant de faire un dépot
+        /// Méthode permettant de faire un dépôt
         /// </summary>
-        /// <param name="montant"> montant du dépot, doit être strictement positif</param>
-        /// <returns>retourne si l'opération s'est bien passée</returns>
+        /// <param name="montant"> montant du dépôt, doit être strictement positif</param>
+        /// <returns>retourne si l'opération s'est bien passé</returns>
         public bool depot(int montant)
         {
             if(montant > 0)
@@ -40,7 +40,7 @@ namespace ProjetArgent
         /// Méthode permettant de faire un retrait
         /// </summary>
         /// <param name="montant">montant du retrait, doit être strictement positif et supérieur au solde</param>
-        /// <returns>retourne si l'opération s'est bien passée</returns>
+        /// <returns>retourne si l'opération s'est bien passé</returns>
         public bool retrait(int montant)
         {
             if( Solde >= montant && montant > 0)
@@ -56,7 +56,7 @@ namespace ProjetArgent
         /// Méthode permettant de faire un virement
         /// </summary>
         /// <param name="montant">montant du virement, doit être strictement positif et supérieur au solde</param>
-        /// <returns>retourne si l'opération s'est bien passée</returns>
+        /// <returns>retourne si l'opération s'est bien passé</returns>
         public bool virement(int montant)
         {
             if(montant > 0 && Solde >= montant)
@@ -69,11 +69,11 @@ namespace ProjetArgent
         }
 
         /// <summary>
-        /// Méthode permettant de faire un prélévement, avec vérification que l'expéditeur peut faire le virement associé
+        /// Méthode permettant de faire un prélèvement, avec vérification que l'expéditeur peut faire le virement associé
         /// </summary>
-        /// <param name="montant">montant du prelevement, doit etre strictement positif</param>
-        /// <param name="expediteur">expediteur associé au prélévement</param>
-        /// <returns>retourne si l'opération s'est bien passée</returns>
+        /// <param name="montant">montant du prélèvement, doit être strictement positif</param>
+        /// <param name="expediteur">expéditeur associé au prélèvement</param>
+        /// <returns>retourne si l'opération s'est bien passé</returns>
         public bool prelevement(int montant, Compte expediteur)
         {
             if(montant > 0)
@@ -81,7 +81,7 @@ namespace ProjetArgent
                 //L'expéditeur essaie de faire le virement
                 bool virementOk = expediteur.virement(montant);
 
-                //S'il s'est bien passé, le destinateur peut faire le prélévement
+                //S'il s'est bien passé, le destinateur peut faire le prélèvement
                 if (virementOk)
                 {
                     Solde += montant;
