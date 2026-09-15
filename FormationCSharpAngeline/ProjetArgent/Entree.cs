@@ -17,16 +17,16 @@ namespace ProjetArgent
             lireCartes("../../cartes.csv", banque);
             lireComptes("../../comptes.csv", banque);
 
-            //Set de Test minimal, résultat attendu : KO, OK, KO, KO, OK, KO, OK
+            //Set de Test minimal, résultat attendu : 1;KO, 2;OK, 3;KO, 4;KO, 5;OK, 6;KO, 7;OK
             lireTransaction("../../transactions.csv", banque);
 
-            //Test du plafond selon les dates, résultat attendu : OK, OK , KO, OK, OK, KO, OK, OK
+            //Test du plafond selon les dates, résultat attendu : 1;OK, 2;OK , 3;KO, 4;OK, 5;OK, 6;KO, 7;OK, 8;OK
             //lireTransaction("../../transactionsPlafond.csv", banque);
 
             //Test avec différents montants, à la fois négatifs ou supérieurs au solde, résultat attendu : tout KO
             //lireTransaction("../../transactionsMontant.csv", banque);
 
-            //Test sur les différents types de compte, résultat attendu : OK, KO, OK
+            //Test sur les différents types de compte, résultat attendu : 1;OK, 2;KO, 3;OK
             //lireTransaction("../../transactionsType.csv", banque);
 
             Console.WriteLine("Traitement terminé");
