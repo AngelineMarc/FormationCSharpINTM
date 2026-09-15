@@ -16,7 +16,18 @@ namespace ProjetArgent
             // Lecture des csv
             lireCartes("../../cartes.csv", banque);
             lireComptes("../../comptes.csv", banque);
-            lireTransaction("../../transactionsPlafond.csv", banque);
+
+            //Set de Test minimal, résultat attendu : KO, OK, KO, KO, OK, KO
+            lireTransaction("../../transactions.csv", banque);
+
+            //Test du plafond selon les dates, résultat attendu : OK, OK , KO, OK, OK, KO, OK, OK
+            //lireTransaction("../../transactionsPlafond.csv", banque);
+
+            //Test avec différents montant, à la fois négatif ou supérieur au solde, résultat attendu : tout KO
+            //lireTransaction("../../transactionsMontant.csv", banque);
+
+            //Test sur les différents type de compte, résulat attendu : OK, KO, OK
+            //lireTransaction("../../transactionsType.csv", banque);
 
             Console.WriteLine("Traitement terminé");
             Console.ReadKey();
