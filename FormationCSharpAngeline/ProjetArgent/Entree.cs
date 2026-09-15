@@ -17,7 +17,7 @@ namespace ProjetArgent
             lireCartes("../../cartes.csv", banque);
             lireComptes("../../comptes.csv", banque);
 
-            //Set de Test minimal, résultat attendu : KO, OK, KO, KO, OK, KO
+            //Set de Test minimal, résultat attendu : KO, OK, KO, KO, OK, KO, OK
             lireTransaction("../../transactions.csv", banque);
 
             //Test du plafond selon les dates, résultat attendu : OK, OK , KO, OK, OK, KO, OK, OK
