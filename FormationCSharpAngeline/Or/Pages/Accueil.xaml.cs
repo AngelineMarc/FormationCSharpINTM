@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Or.Business;
+using Or.Models;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
@@ -17,7 +19,8 @@ namespace Or.Pages
         public void GoConsultationCarte(object sender, RoutedEventArgs e)
         {
             bool estCarteValide = long.TryParse(NumeroCarte.Text, out long result);
-            if (estCarteValide)
+            Carte c = SqlRequests.InfosCarte(result);
+            if (estCarteValide && c != null)
             {
                 NavigationService.Navigate(new ConsultationCarte(result));
             }

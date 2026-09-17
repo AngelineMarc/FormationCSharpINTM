@@ -1,6 +1,7 @@
 ﻿using Or.Business;
 using Or.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
@@ -89,9 +90,46 @@ namespace Or.Pages
 
         }
 
+        private void Ajouter_Beneficiaire(object sender, RoutedEventArgs e)
+        {
+            PageFunctionNavigate(new AjoutBeneficiaire(CartePorteur.Id));
+        }
+
+        void PageFunctionNavigate(PageFunction<long> page)
+        {
+            page.Return += new ReturnEventHandler<long>(PageFunction_Return);
+            NavigationService.Navigate(page);
+        }
+
+        void PageFunction_Return(object sender, ReturnEventArgs<long> e)
+        {
+        }
+
         private void Expediteur_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var viewDestinataire = CollectionViewSource.GetDefaultView(SqlRequests.ListeComptesDispo((Expediteur.SelectedItem as Compte).Id));
+            List<Compte> comptes = new List<Compte>();
+            Compte ex = Expediteur.SelectedItem as Compte;
+
+            //Si c'est un compte courant, récupération des beneficiaires associé
+            if (ex.TypeDuCompte == TypeCompte.Courant)
+            {
+                comptes = SqlRequests.ListeBenefciairesAssocieClient((Expediteur.SelectedItem as Compte).IdentifiantCarte);
+            }
+            
+            //Ajout des comptes associés à la carte
+            comptes.AddRange(SqlRequests.ListeComptesAssociesCarte((Expediteur.SelectedItem as Compte).IdentifiantCarte));
+
+            //Suppression de soi-même dans la liste
+            for(int i = 0; i< comptes.Count; i++)
+            {
+                if (comptes[i].Id == ex.Id)
+                {
+                    comptes.RemoveAt(i);
+                }
+            }
+            
+            
+            var viewDestinataire = CollectionViewSource.GetDefaultView(comptes);
             viewDestinataire.GroupDescriptions.Add(new PropertyGroupDescription("IdentifiantCarte"));
             viewDestinataire.SortDescriptions.Add(new SortDescription("IdentifiantCarte", ListSortDirection.Descending));
             viewDestinataire.SortDescriptions.Add(new SortDescription("TypeDuCompte", ListSortDirection.Ascending));

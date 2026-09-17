@@ -24,7 +24,8 @@ namespace Or.Business
         ErreurPlafond,
         ErreurVirementLivret,
         MontantInvalide,
-        SoldeInsuffisant
+        SoldeInsuffisant,
+        ErreurBeneficiaire
     }
 
     public static class Tools
@@ -92,6 +93,9 @@ namespace Or.Business
                     break;
                 case CodeResultat.MontantInvalide:
                     label = "Montant de l'opération invalide";
+                    break;
+                case CodeResultat.ErreurBeneficiaire:
+                    label = "Saisie bénéficiaire invalide";
                     break;
                 default:
                     label = "Opération invalide";

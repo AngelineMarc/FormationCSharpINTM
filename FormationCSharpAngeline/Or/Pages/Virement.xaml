@@ -8,7 +8,7 @@
       xmlns:local="clr-namespace:Or.Pages"
       xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="800" KeepAlive="True"
       Title="Virement">
 
     <Grid>
@@ -73,6 +73,7 @@
         <Button x:Name="Retour" Content="Retour" HorizontalAlignment="Left" Margin="100,330,0,0" VerticalAlignment="Top" Height="30" Width="80" Click="Retour_Click"/>
         <Button x:Name="button" Content="Valider" HorizontalAlignment="Left" Margin="555,330,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="ValiderVirement_Click"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="250,210,0,0" TextWrapping="Wrap" Text="⟹" VerticalAlignment="Top" Height="22" Width="20"/>
+        <Button x:Name="AjoujBenef" Content="Ajouter un bénéficiaire" HorizontalAlignment="Left" Margin="269,330,0,0" VerticalAlignment="Top" Height="30" Width="200" Click="Ajouter_Beneficiaire"/>
 
     </Grid>
 </PageFunction>

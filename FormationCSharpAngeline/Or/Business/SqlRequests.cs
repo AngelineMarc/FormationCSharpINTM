@@ -29,6 +29,11 @@ namespace Or.Business
 
         static readonly string queryUpdateCompte = "UPDATE COMPTE SET Solde=Solde-@Montant WHERE IdtCpt=@IdtCompte";
 
+        static readonly string queryListeBenefciairesAssocieClient = "SELECT c.IdtCpt, c.NumCarte, c.Solde, c.TypeCompte FROM COMPTE c INNER JOIN BENEFICIAIRES b ON b.IdtCpt = c.IdtCpt WHERE b.NumCarte=@Carte";
+        static readonly string queryAjoutBenefciaire = "INSERT INTO BENEFICIAIRES (IdtCpt, NumCarte) VALUES (@IdtCpt, @Carte)";
+        static readonly string querySuppressionBeneficiaire = "DELETE FROM BENEFICIAIRES WHERE IdtCpt=@IdtCpt AND NumCarte=@Carte";
+        static readonly string queryEstBeneficiairePotentiel = "SELECT IdtCpt, NumCarte, Solde, TypeCompte FROM COMPTE  WHERE IdtCpt=@IdtCompte AND TypeCompte != 'Livret' and NumCarte != @Carte";
+
         /// <summary>
         /// Obtention des infos d'une carte
         /// </summary>
@@ -468,6 +473,111 @@ namespace Or.Business
 
             return updateCompte;
         }
+
+        public static List<Compte> ListeBenefciairesAssocieClient(long numCarte)
+        {
+            List<Compte> comptes = new List<Compte>();
+
+            string connectionString = ConstructionConnexionString(fileDb);
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand(queryListeBenefciairesAssocieClient, connection))
+                {
+                    command.Parameters.AddWithValue("@Carte", numCarte);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        int idt;
+                        long carte;
+                        decimal solde;
+                        string typeCompte;
+
+                        while (reader.Read())
+                        {
+                            idt = reader.GetInt32(0);
+                            carte = reader.GetInt64(1);
+                            solde = reader.GetDecimal(2);
+                            typeCompte = reader.GetString(3);
+
+                            Compte compte = new Compte(idt, carte, typeCompte == "Courant" ? TypeCompte.Courant : TypeCompte.Livret, solde);
+                            comptes.Add(compte);
+                        }
+                    }
+                }
+            }
+
+            return comptes;
+        }
+
+        public static void AjoutBenefciaire(long numCarte, int idtCpt)
+        {
+            string connectionString = ConstructionConnexionString(fileDb);
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                
+                var ajoutBeneficiare = connection.CreateCommand();
+                ajoutBeneficiare.CommandText = queryAjoutBenefciaire;
+
+                ajoutBeneficiare.Parameters.AddWithValue("@IdtCpt", idtCpt);
+                ajoutBeneficiare.Parameters.AddWithValue("@Carte", numCarte);
+
+                ajoutBeneficiare.ExecuteNonQuery();
+
+                   
+            }
+        }
+
+        public static void SuppressionBenefciaire(long numCarte, int idtCpt)
+        {
+            string connectionString = ConstructionConnexionString(fileDb);
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                var supprBeneficiare = connection.CreateCommand();
+                supprBeneficiare.CommandText = querySuppressionBeneficiaire;
+
+                supprBeneficiare.Parameters.AddWithValue("@IdtCpt", idtCpt);
+                supprBeneficiare.Parameters.AddWithValue("@Carte", numCarte);
+                supprBeneficiare.ExecuteNonQuery();
+            }
+        }
+
+        public static bool EstBeneficiairePotentiel(int idtCpt, long numCarte)
+        {
+            string connectionString = ConstructionConnexionString(fileDb);
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand(queryEstBeneficiairePotentiel, connection))
+                {
+                    command.Parameters.AddWithValue("@IdtCompte", idtCpt);
+                    command.Parameters.AddWithValue("@Carte", numCarte);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            
+                            return true;
+                            
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
 
     }
 }

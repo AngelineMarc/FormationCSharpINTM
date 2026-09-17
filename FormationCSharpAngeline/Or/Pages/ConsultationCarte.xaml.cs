@@ -16,11 +16,13 @@ namespace Or.Pages
             InitializeComponent();
             Carte c = SqlRequests.InfosCarte(numCarte);
             
+            
             Numero.Text = c.Id.ToString();
             Prenom.Text = c.PrenomClient;
             Nom.Text = c.NomClient;
 
             listView.ItemsSource = SqlRequests.ListeComptesAssociesCarte(numCarte);
+            
         }
         private void GoDetailsCompte(object sender, RoutedEventArgs e)
         {
@@ -45,6 +47,11 @@ namespace Or.Pages
         private void GoDepot(object sender, RoutedEventArgs e)
         {
             PageFunctionNavigate(new Depot(long.Parse(Numero.Text)));
+        }
+
+        private void GoBeneficiaires(object sender, RoutedEventArgs e)
+        {
+            PageFunctionNavigate(new Beneficiaires(long.Parse(Numero.Text)));
         }
 
         void PageFunctionNavigate(PageFunction<long> page)
