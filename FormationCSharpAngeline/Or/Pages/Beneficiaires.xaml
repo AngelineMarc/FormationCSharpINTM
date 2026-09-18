@@ -46,7 +46,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding NomClient}"
+                                    <TextBlock Text="{Binding Item2.NomClient}"
                            Style="{StaticResource TextColumnStyle}"
                            TextAlignment="Center" />
                                 </Grid>
@@ -59,7 +59,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding PrenomClient}"
+                                    <TextBlock Text="{Binding Item2.PrenomClient}"
                                                 Style="{StaticResource TextColumnStyle}"
                                                 TextAlignment="Center" />
                                 </Grid>
@@ -72,7 +72,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding Id}"
+                                    <TextBlock Text="{Binding Item1.Id}"
                                                Style="{StaticResource TextColumnStyle}"
                                                TextAlignment="Center" 
                                                />

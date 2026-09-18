@@ -33,17 +33,13 @@ namespace Or.Pages
             Nom.Text = c.NomClient;
 
             List<Compte> comptes = SqlRequests.ListeBenefciairesAssocieClient(numCarte);
-            List<Carte> cartes = new List<Carte>();
-            foreach(Compte cpt in comptes)
+            List<Tuple<Compte, Carte>> beneficiaires = new List<Tuple<Compte, Carte>>();
+            foreach (Compte cpt in comptes)
             {
-                Carte carte = SqlRequests.InfosCarte(cpt.IdentifiantCarte);
-                cartes.Add(carte);
+                beneficiaires.Add(new Tuple<Compte, Carte>(cpt, SqlRequests.InfosCarte(cpt.IdentifiantCarte)));
             }
-            
-            //TODO pas bon n°cpt
-            
-            listView.ItemsSource = comptes;
-            listView.ItemsSource = cartes;
+
+            listView.ItemsSource = beneficiaires;
         }
 
         private void Retour_Click(object sender, RoutedEventArgs e)

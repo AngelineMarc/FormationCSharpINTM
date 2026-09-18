@@ -473,7 +473,11 @@ namespace Or.Business
 
             return updateCompte;
         }
-
+        /// <summary>
+        /// Liste les bénéficiaires d'une carte
+        /// </summary>
+        /// <param name="numCarte"> numéro de la carte du client connecté</param>
+        /// <returns>Liste des comptes bénéficiaires</returns>
         public static List<Compte> ListeBenefciairesAssocieClient(long numCarte)
         {
             List<Compte> comptes = new List<Compte>();
@@ -512,6 +516,11 @@ namespace Or.Business
             return comptes;
         }
 
+        /// <summary>
+        /// Ajoute un bénéficiaire
+        /// </summary>
+        /// <param name="numCarte">numéro de la carte du client actuel</param>
+        /// <param name="idtCpt">identifiant du compte bénéficiaire à ajouter</param>
         public static void AjoutBenefciaire(long numCarte, int idtCpt)
         {
             string connectionString = ConstructionConnexionString(fileDb);
@@ -533,6 +542,11 @@ namespace Or.Business
             }
         }
 
+        /// <summary>
+        /// Suppression d'un bénéficaire
+        /// </summary>
+        /// <param name="numCarte">numéro de la carte du client actuel</param>
+        /// <param name="idtCpt">identifiant du compte bénéficiaire à supprimer</param>
         public static void SuppressionBenefciaire(long numCarte, int idtCpt)
         {
             string connectionString = ConstructionConnexionString(fileDb);
@@ -550,6 +564,12 @@ namespace Or.Business
             }
         }
 
+        /// <summary>
+        /// Vérification de la validité d'un compte pour l'ajouter en bénéficiaire
+        /// </summary>
+        /// <param name="numCarte">numéro de la carte du client actuel</param>
+        /// <param name="idtCpt">identifiant du compte bénéficiaire à vérifier</param>
+        /// <returns></returns>
         public static bool EstBeneficiairePotentiel(int idtCpt, long numCarte)
         {
             string connectionString = ConstructionConnexionString(fileDb);
@@ -567,14 +587,11 @@ namespace Or.Business
                     {
                         if (reader.Read())
                         {
-                            
                             return true;
-                            
                         }
                     }
                 }
             }
-
             return false;
         }
 
