@@ -515,6 +515,7 @@ namespace Or.Business
 
             return comptes;
         }
+        // les nouvelles requêtes sont en adéquation avec les précédentes
 
         /// <summary>
         /// Ajoute un bénéficiaire

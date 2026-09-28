@@ -32,6 +32,7 @@ namespace Or.Pages
             Prenom.Text = c.PrenomClient;
             Nom.Text = c.NomClient;
 
+            // OK
             List<Compte> comptes = SqlRequests.ListeBenefciairesAssocieClient(numCarte);
             List<Tuple<Compte, Carte>> beneficiaires = new List<Tuple<Compte, Carte>>();
             foreach (Compte cpt in comptes)
