@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProjetArgent
+﻿namespace ProjetArgent
 {
     internal class Program
     {
+        // Une ligne, c'est concis !
         static void Main(string[] args)
         {
             Entree.Traitement();

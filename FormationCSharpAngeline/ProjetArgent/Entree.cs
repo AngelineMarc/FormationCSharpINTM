@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjetArgent
 {
@@ -14,11 +10,11 @@ namespace ProjetArgent
             Banque banque = new Banque();
 
             // Lecture des csv
-            lireCartes("../../cartes.csv", banque);
-            lireComptes("../../comptes.csv", banque);
+            LireCartes("../../cartes.csv", banque);
+            LireComptes("../../comptes.csv", banque);
 
             //Set de Test minimal, résultat attendu : 1;KO, 2;OK, 3;KO, 4;KO, 5;OK, 6;KO, 7;OK
-            lireTransaction("../../transactions.csv", banque);
+            LireTransaction("../../transactions.csv", banque);
 
             //Test du plafond selon les dates, résultat attendu : 1;OK, 2;OK , 3;KO, 4;OK, 5;OK, 6;KO, 7;OK, 8;OK
             //lireTransaction("../../transactionsPlafond.csv", banque);
@@ -39,8 +35,9 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="path"> chemin d'accès au fichier</param>
         /// <param name="banque"> banque associée </param>
-        public static void lireCartes(string path, Banque banque)
+        public static void LireCartes(string path, Banque banque)
         {
+            // Bien les deux using imbriqués
             using (Stream s = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 using (StreamReader sr = new StreamReader(s))
@@ -76,7 +73,7 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="path"> chemin d'accès au fichier</param>
         /// <param name="banque"> banque associée </param>
-        public static void lireComptes(string path, Banque banque)
+        public static void LireComptes(string path, Banque banque)
         {
             using (Stream s = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
@@ -99,13 +96,12 @@ namespace ProjetArgent
                         }
                         else
                         {
+                            // Duplication de code avec avant, possibilité de refactoriser
                             if(int.TryParse(donneeCompte[0], out int id) && long.TryParse(donneeCompte[1], out long numCarte))
                             {
                                 banque.AjoutCompte(id, numCarte, donneeCompte[2]);
                             }
-                            
                         }
-
                     }
                 }
             }
@@ -116,16 +112,15 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="path"> chemin d'accès au fichier</param>
         /// <param name="banque"> banque associée </param>
-        public static void lireTransaction(string path, Banque banque)
+        public static void LireTransaction(string path, Banque banque)
         {
             using (Stream s = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 using (StreamReader sr = new StreamReader(s))
                 {
                     //Parcours et traitement des transactions une par une
-                    foreach (string l in sr.ReadToEnd().Split('\n'))
+                    foreach (string l in sr.ReadToEnd().Split('\n')) // Le plus dangereux, car en PRD sans doute des millions de lignes ! levée d'exception
                     {
-
                         string[] donneeTransaction = l.Trim().Split(';');
 
                         //Parse de l'id, du montant, de l'expéditeur et du destinataire

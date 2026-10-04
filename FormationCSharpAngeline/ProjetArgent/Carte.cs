@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ProjetArgent
 {
     internal class Carte
     {
-        public long Numero { get; set; }
-        public int Plafond { get; set; }
+        public long Numero { get; }
+        public int Plafond { get; }
         public List<Transaction> Historique { get; set; }
 
         public List<int> numComptes;
@@ -27,13 +23,14 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="transaction">transaction en cours de traitement</param>
         /// <returns></returns>
-        public bool verificationPlafond(Transaction transaction)
+        public bool VerificationPlafond(Transaction transaction)
         {
             int cumulTransation = 0;
 
             //Parcours de toutes les transactions de l'historique
             foreach(Transaction tr in Historique)
             {
+                // OK
                 // Si la transaction de l'historique est datée de moins de 10 jours par rapport à l'actuelle
                 if((transaction.Horodatage - tr.Horodatage).TotalDays <= 10)
                 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace ProjetArgent
 {
@@ -12,10 +7,9 @@ namespace ProjetArgent
         /// <summary>
         /// Initialisation du fichier de sortie
         /// </summary>
-        public static void initSorite()
+        public static void InitSorite()
         {
             File.WriteAllText("../../statut.csv", string.Empty);
-
         }
 
         /// <summary>
@@ -23,7 +17,7 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="numTransaction">identifiant de la transaction</param>
         /// <param name="statut"> statut de la transaction </param>
-        public static void ecrireSortie(int numTransaction, string statut)
+        public static void EcrireSortie(int numTransaction, string statut)
         {
             using (StreamWriter writer = File.AppendText("../../statut.csv"))
             {

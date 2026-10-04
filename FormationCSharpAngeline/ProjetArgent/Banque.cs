@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ProjetArgent
 {
     public class Banque
     {
-        private List<Compte> compteList;
-        private List<Carte> carteList;
-        private List<int> transactionList;
+        private readonly List<Compte> compteList;
+        private readonly List<Carte> carteList;
+        private readonly List<int> transactionList;
 
         public Banque()
         {
             compteList = new List<Compte>();
             carteList = new List<Carte>();
             transactionList = new List<int>();
-            Sortie.initSorite();
+            Sortie.InitSorite();
         }
 
         /// <summary>
@@ -31,6 +28,7 @@ namespace ProjetArgent
         /// <param name="solde"> solde du compte, paramètre optionnel, doit etre positif</param>
         public void AjoutCompte(int id, long numCarte, string type, int solde = 0 )
         {
+            // OK - contrôles des valeurs ici et non dans Entrée
             if(id > 0 && solde >= 0 && (type.Equals("Livret") || type.Equals("Courant")))
             {
                 Compte compte = new Compte(id, numCarte, type, solde);
@@ -57,9 +55,11 @@ namespace ProjetArgent
         /// <param name="plafond">plafond de la carte, doit etre compris entre 500 et 3000, paramètre optionnel</param>
         public void AjoutCarte(string numero, int plafond = 500 )
         {
+            // Les contrôles ici
             if(numero.Length == 16 && long.TryParse(numero, out long num) && (plafond >= 500 && plafond <= 3000))
             {
                 Carte carte = new Carte(num, plafond);
+                // LINQ ! 
                 Carte carteExistant = (from item in carteList where item.Numero == num select item).FirstOrDefault();
                 if (carteExistant == null)
                 {
@@ -98,7 +98,6 @@ namespace ProjetArgent
         {
             bool transactionOk = VerificationTransaction(id, horodatage);
 
-
             if (transactionOk)
             {
                 bool operationOk = false;
@@ -113,7 +112,7 @@ namespace ProjetArgent
                 //Si l'expéditeur est 0 et que le compte destination existe, il s'agit d'un dépôt d'argent sur le compte destinataire
                 if (transaction.Expediteur == 0 && cptdes != null)
                 {
-                    operationOk = cptdes.depot(transaction.Montant);
+                    operationOk = cptdes.Depot(transaction.Montant);
 
                     //Si l'opération se passe bien, on ajoute la transaction à l'historique de la carte
                     if (operationOk)
@@ -129,9 +128,9 @@ namespace ProjetArgent
                     Carte carte = (from item in carteList where item.Numero == cptexp.NumCarte select item).FirstOrDefault();
 
                     //Vérification que le plafond ne sera pas dépassé
-                    if (carte.verificationPlafond(transaction))
+                    if (carte.VerificationPlafond(transaction))
                     {
-                        operationOk = cptexp.retrait(transaction.Montant);
+                        operationOk = cptexp.Retrait(transaction.Montant);
                         if (operationOk)
                         {
                             carte.Historique.Add(transaction);
@@ -144,15 +143,15 @@ namespace ProjetArgent
                 {
                     //Les deux comptes doivent être existants, si les numéros de carte correspondent ou que les 2 comptes sont des comptes courants
                     if(cptdes != null && cptexp != null && 
-                        (cptdes.NumCarte == cptexp.NumCarte || (cptdes.Type == "Courant" && cptexp.Type == "Courant")))
+                        (cptdes.NumCarte == cptexp.NumCarte || (cptdes.Type == "Courant" && cptexp.Type == "Courant"))) // Bien de prendre en compte cette contrainte
                     {
                         //Récupération des cartes associées
                         Carte cartedest = (from item in carteList where item.Numero == cptdes.NumCarte select item).FirstOrDefault();
                         Carte carteexp = (from item in carteList where item.Numero == cptdes.NumCarte select item).FirstOrDefault();
 
-                        if (carteexp.verificationPlafond(transaction))
+                        if (carteexp.VerificationPlafond(transaction))
                         {
-                            operationOk = cptdes.prelevement(transaction.Montant, cptexp);
+                            operationOk = cptdes.Prelevement(transaction.Montant, cptexp);
                             if (operationOk)
                             {
                                 //Ajout de la transaction sur la carte du compte expéditeur
@@ -172,11 +171,11 @@ namespace ProjetArgent
                 //Ecriture en sortie du statut de la transaction
                 if (operationOk)
                 {
-                    Sortie.ecrireSortie(id, "OK");
+                    Sortie.EcrireSortie(id, "OK");
                 }
                 else
                 {
-                    Sortie.ecrireSortie(id, "KO");
+                    Sortie.EcrireSortie(id, "KO");
                 }
             }   
         }

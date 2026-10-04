@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProjetArgent
+﻿namespace ProjetArgent
 {
     public class Compte
     {
-        public int Identifiant { get; set; }
-        public long NumCarte { get; set; }
-        public string Type { get; set; }
+        public int Identifiant { get; }
+        public long NumCarte { get; }
+        public string Type { get; }
         public int Solde { get; set; }
 
         public Compte(int identifiant, long numCarte, string type, int solde)
@@ -26,7 +20,7 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="montant"> montant du dépôt, doit être strictement positif</param>
         /// <returns>retourne si l'opération s'est bien passé</returns>
-        public bool depot(int montant)
+        public bool Depot(int montant)
         {
             if(montant > 0)
             {
@@ -41,7 +35,7 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="montant">montant du retrait, doit être strictement positif et supérieur au solde</param>
         /// <returns>retourne si l'opération s'est bien passé</returns>
-        public bool retrait(int montant)
+        public bool Retrait(int montant)
         {
             if( Solde >= montant && montant > 0)
             {
@@ -57,7 +51,7 @@ namespace ProjetArgent
         /// </summary>
         /// <param name="montant">montant du virement, doit être strictement positif et supérieur au solde</param>
         /// <returns>retourne si l'opération s'est bien passé</returns>
-        public bool virement(int montant)
+        public bool Virement(int montant)
         {
             if(montant > 0 && Solde >= montant)
             {
@@ -74,12 +68,12 @@ namespace ProjetArgent
         /// <param name="montant">montant du prélèvement, doit être strictement positif</param>
         /// <param name="expediteur">expéditeur associé au prélèvement</param>
         /// <returns>retourne si l'opération s'est bien passé</returns>
-        public bool prelevement(int montant, Compte expediteur)
+        public bool Prelevement(int montant, Compte expediteur)
         {
             if(montant > 0)
             {
                 //L'expéditeur essaie de faire le virement
-                bool virementOk = expediteur.virement(montant);
+                bool virementOk = expediteur.Virement(montant);
 
                 //S'il s'est bien passé, le destinateur peut faire le prélèvement
                 if (virementOk)
@@ -88,8 +82,6 @@ namespace ProjetArgent
                     return true;
                 }
             }
-            
-
             return false;
         }
     }
